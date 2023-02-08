@@ -1,0 +1,134 @@
+﻿@*@model IEnumerable<RampUpAssignment1.Models.EmployeeViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+*@
+
+
+
+
+
+ @model IEnumerable<RampUpAssignment1.Models.EmployeeViewModel>
+@{
+    ViewData["Title"] = "Employee Details";
+    var successMessage = TempData["SuccessMessage"]?.ToString();
+    var errorMessage = TempData["errorMessage"]?.ToString();
+
+
+}
+<div class="nav-item">
+    <a class="btn btn-lg float-end btn-danger" asp-area="" asp-controller="Home" asp-action="LogOut">Logout</a>
+</div>
+<h3>Employee Details</h3>
+
+<hr/>
+@if (!string.IsNullOrWhiteSpace(successMessage))
+{
+    <div class="alert alert-success ">
+        <strong>Success! </strong>@successMessage
+    </div>
+    <button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+}
+else if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-error ">
+        <strong>Error! </strong>@errorMessage
+    </div>
+    <button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+}
+<form>
+    <button asp-action="Create" asp-controller="Employee" class="btn btn-primary mb-3">Create Employee</button>
+    <table class="table table-responsive table-hover table-bordered">
+        <thread>
+            <tr class="table-active">
+                <th>Id</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>City</th>
+                <th>Email</th> 
+            </tr>
+        </thread>
+        <tbody>
+
+            @if(Model != null && Model.Any())
+            {
+                @foreach (var employee in Model)
+                {
+                    <tr>
+                        <td>@employee.Id</td>
+                        <td>@employee.Name</td>
+                        <td>@employee.Gender</td>
+                        <td>@employee.City</td>
+                        <td>@employee.Email</td>
+                        
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-primary">Edit</a>
+                                <a asp-controller="Employee" asp-action="Delete" asp-route-id="@employee.Id" class="btn btn-danger">Delete</a>
+                                <a asp-controller="Employee" asp-action="Details" asp-route-id="@employee.Id" class="btn btn-primary">Details</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6">
+                        <div>
+                            No Employees Available at this table!
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

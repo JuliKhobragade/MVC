@@ -1,0 +1,42 @@
+﻿@model RampUpAssignment1.Models.AdminLogin;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+
+    <form asp-controller="Access" asp-action="Login" method="post">
+        <h1>Login Page</h1>
+        <label>Email : </label><input type="email" placeholder="Email" asp-for="Email"/><br /><br />
+        <label>Password : </label><input type="password" placeholder="password" asp-for="Password"/>
+        <br />
+        <label>
+            <input type="checkbox" asp-for="KeepLoggedIn"/>Keep me Logged In
+        </label>
+        <br />
+        @*<button type="submit">Login</button>*@
+      <br />
+        <div class="btn-group btn-group-sm">
+        <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+                    
+        <br />
+
+        @if (ViewData["ValidateMessage"] != null)
+        {
+            <br />
+            <br />
+           <h2>@ViewData["ValidateMessage"]</h2>
+
+        }
+    </form>
+</body>
+</html>
